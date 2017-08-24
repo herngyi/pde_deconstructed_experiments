@@ -44,7 +44,7 @@ for j=1:length(examples)
     axis equal
     legend('OSC','DSC','NSC','None')
     xlabel('log avg edge length')
-    ylabel('log linf error')
+    ylabel('log l2 error')
     str=['Error vs resolution in ',exampless(j,:)];
     title(str);
 end
