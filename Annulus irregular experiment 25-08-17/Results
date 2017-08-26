@@ -1,0 +1,9 @@
+the graph on the upper side of figure1 is with aniso [0.1,0] which means the triangles meshes are first surpressed 
+in the x direction by 0.1 then stretched in the x direction by 10. Comparing to the second graph on the lower side
+of figure 1 the meshes it gerenates is not very bad. From the graph we can see that all three methods converges while
+the ground truth given by the refined mesh is the fastest.
+We get a similar result when we change the parameter aniso to [0.05,0] which means the triangles meshes are first surpressed 
+in the x direction by 0.05 then stretched in the x direction by 1/0.05. The difference is that the worse mesh ([0.05,0])
+converges slower in all three methods when avg edge length of the mesh decreases.
+Comparing to the good meshes, the bad meshes do converge but the good meshes perform a little better. In other words,
+the good meshes converge at a faster rate which is what we expected.
