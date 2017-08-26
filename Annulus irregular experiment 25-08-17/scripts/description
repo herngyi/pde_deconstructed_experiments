@@ -1,0 +1,3 @@
+the script 'test' uses the functions 'stretch' and 'irre_converge_test' to perform experiments of laplace equations
+on irregular meshes. The experiments are done in two groups with different level of bad meshes. The control group is the
+good meshes which can be found in Annulus Laplace Experiment.
