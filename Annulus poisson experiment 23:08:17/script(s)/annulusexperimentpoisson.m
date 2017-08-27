@@ -5,16 +5,16 @@
 %constant right-hand side.
 %
 g=@(x,y) x.*0;
-H=@(x,y) [-4.*x,x.*0]
+H=@(x,y) [x,x.*0]
 R0=1
 R1=2
-poisson_exact = @(r) -r.^2+(R0.^2-R1.^2)./(log(R0)-log(R1)).*log(r)+(log(R0).*R1.^2-R0.^2.*log(R1))./(log(R0)-log(R1));
+poisson_exact = @(r) (-1/4).*(-r.^2+(R0.^2-R1.^2)./(log(R0)-log(R1)).*log(r)+(log(R0).*R1.^2-R0.^2.*log(R1))./(log(R0)-log(R1)));
 errordelta=[];
 errornaive=[];
 errorugt=[];
 %errorneumann=[];
 h=[];
-for s=3:15
+for s=3:12
     utrue=[];
     [VA,FA,NA]=annulus_neigh(2^s,2,'R',1.2);
     [VA,FA,va]=bd_loops_first(VA,FA);
