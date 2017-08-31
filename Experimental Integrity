@@ -1,0 +1,19 @@
+Sorry I didn't check the scripts for the experiment
+Sorry that you had to bear the brunt of the experimental work.
+I am not going to blame you for this because I understand your thought process, and that you were doing your best under difficult constraints. I'd like to explain my perspective on this situation, and figure out together with you where to go from here.
+
+
+Intuitions is fine, but the numerical values of our errors are now suspect
+
+Code that people may use or build on, and results that come from it which people may try to replicate or extend, may have bugs but must at least theoretically do what we claim it does. I.e. either we fix the bug so that input h is RHS, or we acknowledge the bug and the corresponding limitations on our results. I'm willing to help
+
+If we're quite sure that input h gives RHS -h/4, but don't know why, then we should state that. Otherwise I feel that we are manipulating our findings to fit our desired theory, which is not acceptable science.
+
+If we do neither of the above, I would rather the report did not go online. 
+
+At least Mitch and Christine should be made aware of this
+
+If tradeoff between scientific rigor and speed, must choose rigor
+- e.g. in report you need Mitch's results to be stated rigorously
+
+You made Christine copy the experiment
