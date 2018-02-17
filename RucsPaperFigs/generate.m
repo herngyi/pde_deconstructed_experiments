@@ -13,7 +13,7 @@ errorugt=[];
 %errorneumann=[];
 h=[];
 hgt=[];
-for s=5:8
+for s=5:11
     utrue=[];
     [VA,FA,NA]=annulus(2^s,2,'R',1.4);
     [VB,FB,NB]=annulus(2^(s-1),1.6,'R',1); 
@@ -64,11 +64,11 @@ errornaive=[];
 errorugt=[];
 %errorneumann=[];
 h=[];
-for s=5:8
+for s=4:10
     utrue=[];
     [VA,FA,NA]=annulus_neigh(2^s,2,'R',1.2);
     [VA,FA,va]=bd_loops_first(VA,FA);
-    [VB,FB,NB]=annulus_neigh(2^s,1.8,'R',1);
+    [VB,FB,NB]=annulus_neigh(2^(s-1),1.8,'R',1);
     [VB,FB,vb]=bd_loops_first(VB,FB);   
     TH=[0,0];
     [TV,TF,N,cycLocs] = remesh_union(VA,FA,va,VB,FB,vb,TH);
@@ -116,7 +116,7 @@ loglog(Hh,E,'LineWidth',3)
     saveas(gcf,'fig2','epsc')
 end
 
-for i=5:15
+for i=5:13
 [errordelta(i-4),errornaive(i-4),errorugt(i-4),h(i-4)] = irre_poisson_test(2^(-i),[0.1,0]);
 disp(i)
 end
@@ -131,7 +131,7 @@ end
     saveas(gcf,'fig3','epsc')
     
     
- for i=5:15
+ for i=5:13
 [errordelta(i-4),errornaive(i-4),errorugt(i-4),h(i-4)] = irre_converge_test(2^(-i),[0.1,0]);
 disp('i')
 end   
