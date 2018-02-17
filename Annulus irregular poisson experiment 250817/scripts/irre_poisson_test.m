@@ -1,4 +1,13 @@
 function [errordelta,errornaive,errorugt,h] = irre_poisson_test(maxarea,aniso)
+hgt=[];
+g=@(x,y) x.*0;
+GG=@(V) zeros(size(V,1),1);
+H=@(x,y) [x,x.*0]
+HH = @(V) ones(size(V,1),1);
+R0=1
+R1=2
+poisson_exact = @(r) (-1/4).*(-r.^2+(R0.^2-R1.^2)./(log(R0)-log(R1)).*log(r)+(log(R0).*R1.^2-R0.^2.*log(R1))./(log(R0)-log(R1)));
+
 g=@(x,y) x.*0;
 H=@(x,y) [x,x.*0]
 R0=1
@@ -39,10 +48,10 @@ h=[];
     Q=G'*dbl*G;
     B=(-X'*dbl*G-(G'*dbl*X)')';
     ugt=min_quad_with_fixed(Q,B,[1:cycLocs(end)]',g(1:cycLocs(end))');
-    [uAdelta,uBdelta]=solve_intersecting_poisson(VA,FA,NA,va,VB,FB,NB,vb,g,H,'delta');
-    udelta=[uAdelta;uBdelta];
-    [uAnaive,uBnaive]=solve_intersecting_poisson(VA,FA,NA,va,VB,FB,NB,vb,g,H,'naive');
-    unaive=[uAnaive;uBnaive];
+    ZZ=overlap_poisson({VA,VB},{FA,FB},GG,HH,'Method','dirichlet');
+    udelta=[ZZ{1};ZZ{2}];
+    ZZ=overlap_poisson({VA,VB},{FA,FB},GG,HH,'Method','naive');
+    unaive=[ZZ{1};ZZ{2}];
     
    
    eugt=[];

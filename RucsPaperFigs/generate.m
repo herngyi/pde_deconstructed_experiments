@@ -13,7 +13,7 @@ errorugt=[];
 %errorneumann=[];
 h=[];
 hgt=[];
-for s=5:14
+for s=5:8
     utrue=[];
     [VA,FA,NA]=annulus(2^s,2,'R',1.4);
     [VB,FB,NB]=annulus(2^(s-1),1.6,'R',1); 
@@ -43,7 +43,7 @@ for s=5:14
 loglog(H,E,'LineWidth',3)
     axis equal
    % legend('DSC','OSC','GT')
-    title('Convergence for annulus test')
+    title('Laplace Regular')
     xlabel('h')
     ylabel('L_\infty error')
     drawnow
@@ -64,7 +64,7 @@ errornaive=[];
 errorugt=[];
 %errorneumann=[];
 h=[];
-for s=5:14
+for s=5:8
     utrue=[];
     [VA,FA,NA]=annulus_neigh(2^s,2,'R',1.2);
     [VA,FA,va]=bd_loops_first(VA,FA);
@@ -109,47 +109,38 @@ for s=5:14
 loglog(Hh,E,'LineWidth',3)
     axis equal
    % legend('DSC','OSC','GT')
-    title('Convergence for annulus test')
+    title('Poisson regular')
     xlabel('h')
     ylabel('L_\infty error')
     drawnow
     saveas(gcf,'fig2','epsc')
 end
 
-
-[errordelta(1),errornaive(1),errorugt(1),h(1)] = irre_poisson_test(0.0001,[0.1,0]);
-[errordelta(2),errornaive(2),errorugt(2),h(2)] = irre_poisson_test(0.0005,[0.1,0]);
-[errordelta(3),errornaive(3),errorugt(3),h(3)] = irre_poisson_test(0.001,[0.1,0]);
-[errordelta(4),errornaive(4),errorugt(4),h(4)] = irre_poisson_test(0.005,[0.1,0]);
-[errordelta(5),errornaive(5),errorugt(5),h(5)] = irre_poisson_test(0.01,[0.1,0]);
-[errordelta(6),errornaive(6),errorugt(6),h(6)] = irre_poisson_test(0.05,[0.1,0]);
-[errordelta(7),errornaive(7),errorugt(7),h(7)] = irre_poisson_test(0.1,[0.1,0]);
-
+for i=5:15
+[errordelta(i-4),errornaive(i-4),errorugt(i-4),h(i-4)] = irre_poisson_test(2^(-i),[0.1,0]);
+disp(i)
+end
     Hh= [h',h',h'];
     E = [errordelta',errornaive',errorugt'];
-loglog(Hh,E,'LineWidth',3)
+    loglog(Hh,E,'LineWidth',3)
     axis equal
-   % legend('DSC','OSC','GT')
+    % legend('DSC','OSC','GT')
     title('Poisson irregular')
     xlabel('h')
     ylabel('L_\infty error')
     saveas(gcf,'fig3','epsc')
     
     
-    
-    [errordelta(1),errornaive(1),errorugt(1),h(1)] = irre_converge_test(0.0001,[0.1,0]);
-[errordelta(2),errornaive(2),errorugt(2),h(2)] = irre_converge_test(0.0005,[0.1,0]);
-[errordelta(3),errornaive(3),errorugt(3),h(3)] = irre_converge_test(0.001,[0.1,0]);
-[errordelta(4),errornaive(4),errorugt(4),h(4)] = irre_converge_test(0.005,[0.1,0]);
-[errordelta(5),errornaive(5),errorugt(5),h(5)] = irre_converge_test(0.01,[0.1,0]);
-[errordelta(6),errornaive(6),errorugt(6),h(6)] = irre_converge_test(0.05,[0.1,0]);
-[errordelta(7),errornaive(7),errorugt(7),h(7)] = irre_converge_test(0.1,[0.1,0]);
+ for i=5:15
+[errordelta(i-4),errornaive(i-4),errorugt(i-4),h(i-4)] = irre_converge_test(2^(-i),[0.1,0]);
+disp('i')
+end   
 
     Hh= [h',h',h'];
     E = [errordelta',errornaive',errorugt'];
-loglog(Hh,E,'LineWidth',3)
+    loglog(Hh,E,'LineWidth',3)
     axis equal
-   % legend('DSC','OSC','GT')
+    % legend('DSC','OSC','GT')
     title('Laplace irregular')
     xlabel('h')
     ylabel('L_\infty error')
