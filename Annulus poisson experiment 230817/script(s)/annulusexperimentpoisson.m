@@ -4,8 +4,11 @@
 %them against the known analytic solution of the poisson equation with
 %constant right-hand side.
 %
+hgt=[];
 g=@(x,y) x.*0;
+GG=@(V) zeros(size(V,1),1);
 H=@(x,y) [x,x.*0]
+HH = @(V) ones(size(V,1),1);
 R0=1
 R1=2
 poisson_exact = @(r) (-1/4).*(-r.^2+(R0.^2-R1.^2)./(log(R0)-log(R1)).*log(r)+(log(R0).*R1.^2-R0.^2.*log(R1))./(log(R0)-log(R1)));
@@ -30,10 +33,10 @@ for s=3:12
     Q=G'*dbl*G;
     B=(-X'*dbl*G-(G'*dbl*X)')';
     ugt=min_quad_with_fixed(Q,B,[1:cycLocs(end)]',g(1:cycLocs(end))');
-    [uAdelta,uBdelta]=solve_intersecting_poisson(VA,FA,NA,va,VB,FB,NB,vb,g,H,'delta');
-    udelta=[uAdelta;uBdelta];
-    [uAnaive,uBnaive]=solve_intersecting_poisson(VA,FA,NA,va,VB,FB,NB,vb,g,H,'naive');
-    unaive=[uAnaive;uBnaive];
+    ZZ=overlap_poisson({VA,VB},{FA,FB},GG,HH,'Method','dirichlet');
+    udelta=[ZZ{1};ZZ{2}];
+    ZZ=overlap_poisson({VA,VB},{FA,FB},GG,HH,'Method','naive');
+    unaive=[ZZ{1};ZZ{2}];
     
     
     eugt=[];
@@ -52,11 +55,18 @@ for s=3:12
     errorugt=[errorugt,max(eugt)];
     %errorneumann=[errorneumann,max(abs(utrue-uneumann))];
     disp(length(errordelta))
-    h=[h,avgedge(VA,FA)];
+   h=[h,avgedge(VB,FB)];
+    hgt =[hgt,avgedge(TV,TF)];
+    Hh= [h',h',hgt'];
+    E = [errordelta',errornaive',errorugt'];
+loglog(Hh,E,'LineWidth',3)
+    axis equal
+   % legend('DSC','OSC','GT')
+    title('Convergence for annulus test')
+    xlabel('h')
+    ylabel('L_\infty error')
+    drawnow
+    saveas(gcf,'annulus2dexp2','epsc')
 end
-plot(log(h),log(errornaive),log(h),log(errordelta),log(h),log(errorugt))
-axis equal
-legend('OSC','DSC','GT')
-title('Convergence for annulus test')
-xlabel('log avg edge length')
-ylabel('log linf error')
+
+
